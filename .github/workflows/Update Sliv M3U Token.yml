@@ -14,9 +14,9 @@ jobs:
 
       - name: Update M3U File
         run: |
-          # Replace 'YOUR_SOURCE_URL' with the link where you get the fresh tokens
+          # Replace 'https://raw.githubusercontent.com/cricindia/sliv/refs/heads/main/sliv.m3u' with the link where you get the fresh tokens
           # This command downloads the new file and saves it as sliv.m3u
-          curl -L "YOUR_SOURCE_URL" -o sliv.m3u
+          curl -L "https://raw.githubusercontent.com/cricindia/sliv/refs/heads/main/sliv.m3u" -o sliv.m3u
 
       - name: Commit and Push
         run: |
