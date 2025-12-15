@@ -1,0 +1,33 @@
+name: Update Sliv M3U Token
+
+on:
+  schedule:
+    - cron: '0 */5 * * *' # Runs every 5 hours
+  workflow_dispatch: # Manual run button
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Update M3U File
+        run: |
+          # Replace 'YOUR_SOURCE_URL' with the link where you get the fresh tokens
+          # This command downloads the new file and saves it as sliv.m3u
+          curl -L "YOUR_SOURCE_URL" -o sliv.m3u
+
+      - name: Commit and Push
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          
+          # Check if the file actually changed to avoid spamming commits
+          if git diff --quiet sliv.m3u; then
+            echo "No changes found in the stream tokens."
+          else
+            git add sliv.m3u
+            git commit -m "Updated sliv.m3u with fresh tokens [$(date)]"
+            git push
+          fi
